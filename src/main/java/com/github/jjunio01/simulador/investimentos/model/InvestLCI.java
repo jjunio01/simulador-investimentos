@@ -5,7 +5,7 @@
  */
 package com.github.jjunio01.simulador.investimentos.model;
 
-import br.com.simuladorinvestimentos.util.Message;
+import com.github.jjunio01.simulador.investimentos.util.Message;
 import javax.faces.application.FacesMessage;
 import javax.persistence.Entity;
 
