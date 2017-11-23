@@ -5,12 +5,12 @@
  */
 package com.github.jjunio01.simulador.investimentos.controller;
 
-import br.com.simuladorinvestimentos.model.dao.ClienteDAO;
-import br.com.simuladorinvestimentos.model.Cliente;
-import br.com.simuladorinvestimentos.util.ErroSistema;
-import br.com.simuladorinvestimentos.model.Usuario;
-import br.com.simuladorinvestimentos.util.Criptografia;
-import br.com.simuladorinvestimentos.util.Message;
+import com.github.jjunio01.simulador.investimentos.model.Cliente;
+import com.github.jjunio01.simulador.investimentos.model.Usuario;
+import com.github.jjunio01.simulador.investimentos.model.dao.ClienteDAO;
+import com.github.jjunio01.simulador.investimentos.util.Criptografia;
+import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
+import com.github.jjunio01.simulador.investimentos.util.Message;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;

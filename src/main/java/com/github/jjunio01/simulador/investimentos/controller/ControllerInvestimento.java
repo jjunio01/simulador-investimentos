@@ -5,12 +5,12 @@
  */
 package com.github.jjunio01.simulador.investimentos.controller;
 
-import br.com.simuladorinvestimentos.util.ErroSistema;
-import br.com.simuladorinvestimentos.model.InvestCDB;
-import br.com.simuladorinvestimentos.model.InvestLCI;
-import br.com.simuladorinvestimentos.model.InvestPoupanca;
-import br.com.simuladorinvestimentos.model.Investimento;
-import br.com.simuladorinvestimentos.model.dao.InvestimentoDAO;
+import com.github.jjunio01.simulador.investimentos.model.InvestCDB;
+import com.github.jjunio01.simulador.investimentos.model.InvestLCI;
+import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
+import com.github.jjunio01.simulador.investimentos.model.Investimento;
+import com.github.jjunio01.simulador.investimentos.model.dao.InvestimentoDAO;
+import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,14 +31,13 @@ public class ControllerInvestimento {
     private InvestimentoDAO investDao = InvestimentoDAO.getInstance();
     private int tipoPrazo;
     private List<Investimento> listaInvestimentos;
-   
 
     public ControllerInvestimento() {
         listaInvestimentos = new ArrayList<>();
     }
 
     //Salva os investimentos no banco de dados
-     public void salvar(Investimento investimento) throws ErroSistema {
+    public void salvar(Investimento investimento) throws ErroSistema {
 
         if (investimento instanceof InvestPoupanca) {
             investDao.salvar(poupanca);
@@ -54,6 +53,7 @@ public class ControllerInvestimento {
 
         }
     }
+
     //Calcula rendimentos da poupança
     public void calcularRendimentos(int periodo) {
 
@@ -61,6 +61,7 @@ public class ControllerInvestimento {
         poupanca.calcularRendimentos();
 
     }
+
     //Calcula os rendimentos.
     public void calcularRendimentos(Investimento investimento) throws ErroSistema {
 
@@ -99,7 +100,7 @@ public class ControllerInvestimento {
         listaInvestimentos.add(cdb);
         listaInvestimentos.add(lci);
     }
-    
+
     public InvestPoupanca getPoupanca() {
         return (InvestPoupanca) poupanca;
     }
@@ -144,5 +145,5 @@ public class ControllerInvestimento {
 
         return String.format("%.2f", investimento);
     }
-  
+
 }
