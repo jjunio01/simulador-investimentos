@@ -5,7 +5,7 @@
  */
 package com.github.jjunio01.simulador.investimentos.model.dao;
 
-import br.com.simuladorinvestimentos.util.ErroSistema;
+import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import java.util.List;
 
 /**
@@ -25,4 +25,3 @@ public interface DAOGenerico<T> {
     public List<T> readALL() throws ErroSistema;
 
 }
-    

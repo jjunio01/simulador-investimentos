@@ -5,10 +5,10 @@
  */
 package com.github.jjunio01.simulador.investimentos.model.dao;
 
-import br.com.simuladorinvestimentos.model.InvestCDB;
-import br.com.simuladorinvestimentos.model.InvestLCI;
-import br.com.simuladorinvestimentos.model.InvestPoupanca;
-import br.com.simuladorinvestimentos.util.ErroSistema;
+import com.github.jjunio01.simulador.investimentos.model.InvestCDB;
+import com.github.jjunio01.simulador.investimentos.model.InvestLCI;
+import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
+import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import org.hibernate.Session;
 
 /**

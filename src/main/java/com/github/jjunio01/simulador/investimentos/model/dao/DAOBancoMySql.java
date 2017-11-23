@@ -5,8 +5,8 @@
  */
 package com.github.jjunio01.simulador.investimentos.model.dao;
 
-import br.com.simuladorinvestimentos.util.ErroSistema;
-import br.com.simuladorinvestimentos.util.Message;
+import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
+import com.github.jjunio01.simulador.investimentos.util.Message;
 import javax.faces.application.FacesMessage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,7 +40,7 @@ public class DAOBancoMySql {
     }
 
     //Abre sessão para conexão com o banco.
-   public SessionFactory abrirSession() throws ErroSistema {
+    public SessionFactory abrirSession() throws ErroSistema {
 
         SessionFactory factory = null;
         try {
@@ -53,9 +53,9 @@ public class DAOBancoMySql {
                     "Não foi possível abrir a conexão com o banco de dados", erroAbrirSession);
         }
         return factory;
-}
+    }
 
-   //Inicia uma transação com o banco
+    //Inicia uma transação com o banco
     public static Session iniciarTransacao() throws ErroSistema {
         //Abre uma sessão de conexão com o banco
         Session session = getInstance().abrirSession().openSession();

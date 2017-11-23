@@ -5,9 +5,9 @@
  */
 package com.github.jjunio01.simulador.investimentos.model.dao;
 
-import br.com.simuladorinvestimentos.model.Cliente;
-import br.com.simuladorinvestimentos.util.ErroSistema;
-import br.com.simuladorinvestimentos.model.Usuario;
+import com.github.jjunio01.simulador.investimentos.model.Cliente;
+import com.github.jjunio01.simulador.investimentos.model.Usuario;
+import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import java.util.List;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.Query;
@@ -66,7 +66,7 @@ public class ClienteDAO implements DAOGenerico<Cliente> {
         Session session = DAOBancoMySql.iniciarTransacao();
         Cliente cli = null;
         try {
-            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o 
+            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o
             CPF recebido pelo método, retornando uma lista de obejtos*/
             Query consulta = session.createQuery("from Cliente where cpf like '" + cpf + "'");
             //Resupera o primeiro e único elemento da consulta.
@@ -76,14 +76,14 @@ public class ClienteDAO implements DAOGenerico<Cliente> {
         } finally {
             DAOBancoMySql.fecharTransacao(session);
             return cli;
-        }        
+        }
     }
 
     public Usuario readLogin(String login) throws ErroSistema {
         Session session = DAOBancoMySql.iniciarTransacao();
         Usuario usuario = null;
         try {
-            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o 
+            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o
             Login recebido pelo método, retornando uma lista de obejtos*/
             Query consulta = session.createQuery("from Usuario where login like '" + login + "'");
             usuario = (Usuario) consulta.list().get(0);
@@ -100,7 +100,7 @@ public class ClienteDAO implements DAOGenerico<Cliente> {
         Session session = DAOBancoMySql.iniciarTransacao();
         Cliente cliente = null;
         try {
-            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o 
+            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o
             Login recebido pelo método, retornando uma lista de obejtos*/
             Query consulta = session.createQuery(" from Cliente as cli where cli.usuario.login like'" + login + "'");
             cliente = (Cliente) consulta.list().get(0);
@@ -117,7 +117,7 @@ public class ClienteDAO implements DAOGenerico<Cliente> {
         Session session = DAOBancoMySql.iniciarTransacao();
         Cliente cli = null;
         try {
-            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o 
+            /*Faz consulta no banco de dados utilizando como parâmetro da consulta o
             CPF recebido pelo método, retornando uma lista de obejtos*/
             Query consulta = session.createQuery("from Cliente where cpf like '" + cpf + "'");
             cli = (Cliente) consulta.list().get(0);
