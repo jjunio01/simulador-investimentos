@@ -6,6 +6,7 @@
 package com.github.jjunio01.simulador.investimentos.model;
 
 import com.github.jjunio01.simulador.investimentos.util.Message;
+import java.math.BigDecimal;
 import javax.faces.application.FacesMessage;
 import javax.persistence.Entity;
 
@@ -16,8 +17,8 @@ import javax.persistence.Entity;
 @Entity
 public class InvestLCI extends Investimento {
 
-    private final double cdi = 10.14;
-    private double percentCDI = 80;
+    private final BigDecimal cdi = new BigDecimal("10.14");
+    private BigDecimal percentCDI = new BigDecimal("80");
 
     public InvestLCI() {
     }
@@ -28,30 +29,31 @@ public class InvestLCI extends Investimento {
         if (getPeriodo() < 90) {
             Message.getInstance().adicionarMensagem(
                     null, "Período para o LCI deve ser igual ou superior a 90 dias", FacesMessage.SEVERITY_WARN);
-            this.setValorAtualizado(getValor() + getRendimentos());
+            this.setValorAtualizado(getValor().add(getRendimentos()));
             return;
         }
 
         for (int i = 0; i < this.getPeriodo(); i++) {
-            setIndiceRendimento(1);
+            setIndiceRendimento(new BigDecimal(1));
             //Calcula o índice de rendimento capitalizados ao dia
-            setIndiceRendimento(getIndiceRendimento() * Math.pow((Math.pow(((getCdi() / 100) + 1), 0.003968254)), this.getPeriodo()));
+            setIndiceRendimento(getIndiceRendimento().multiply(
+                    getCdi().divide(new BigDecimal(100)).add(new BigDecimal(1)).pow(1)));
         }
         //Atualiza o valor dos rendimentos;
-        this.setRendimentos(((getIndiceRendimento() - 1) * this.getValor()));
-        this.setValorAtualizado(getValor() + getRendimentos());
+        this.setRendimentos(((getIndiceRendimento().subtract(new BigDecimal(1))).multiply(this.getValor())));
+        this.setValorAtualizado(getValor().add(getRendimentos()));
 
     }
 
-    public double getCdi() {
-        return cdi * (getPercentCDI() / 100);
+    public BigDecimal getCdi() {
+        return cdi;
     }
 
-    public double getPercentCDI() {
+    public BigDecimal getPercentCDI() {
         return percentCDI;
     }
 
-    public void setPercentCDI(double percentCDI) {
+    public void setPercentCDI(BigDecimal percentCDI) {
         this.percentCDI = percentCDI;
     }
 
