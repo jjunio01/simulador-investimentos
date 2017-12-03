@@ -5,6 +5,8 @@
  */
 package com.github.jjunio01.simulador.investimentos.model;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import javax.persistence.Entity;
 
 /**
@@ -14,9 +16,9 @@ import javax.persistence.Entity;
 @Entity
 public class InvestPoupanca extends Investimento {
 
-    private double taxaTr = 0.0000903;
-    private double taxaSelic = 10.15;
-    private double taxaAdicional;
+    private BigDecimal taxaTr = new BigDecimal("0.0000903");
+    private BigDecimal taxaSelic = new BigDecimal("10.15");
+    private BigDecimal taxaAdicional;
 
     public InvestPoupanca() {
     }
@@ -25,38 +27,38 @@ public class InvestPoupanca extends Investimento {
     public void calcularRendimentos() {
         //Calcula os juros mensais do valor, utilizando juros compostos.
         if (super.getPeriodo() >= 30) {
-            this.setRendimentos((this.getValor() * Math.pow(
-                    1 + getIndiceRendimento(), periodo())) - this.getValor());
-        }
-    }
+            MathContext mc = new MathContext(4);
+            this.setRendimentos(this.getValor().multiply(
+                    getIndiceRendimento().add((new BigDecimal("1"))).pow(3, mc)));
 
-    public double getTaxaTr() {
+        }
+        /*public BigDecimal getTaxaTr() {
         return taxaTr;
     }
 
-    public void setTaxaTr(double taxaTr) {
+    public void setTaxaTr(BigDecimal taxaTr) {
         this.taxaTr = taxaTr;
     }
 
-    public double getTaxaSelic() {
+    public BigDecimal getTaxaSelic() {
         return taxaSelic;
     }
 
-    public void setTaxaSelic(double taxaSelic) {
+    public void setTaxaSelic(BigDecimal taxaSelic) {
         this.taxaSelic = taxaSelic;
     }
 
-    public double getTaxaAdicional() {
+    public BigDecimal getTaxaAdicional() {
         setTaxaAdicional();
         return taxaAdicional;
     }
 
     public void setTaxaAdicional() {
         //Atualiza a taxa de rendimento adicional de acordo com a Taxa Selic Vigente
-        if (this.taxaSelic > 8.5) {
-            this.taxaAdicional = 0.0053;
+        if (taxaSelic.compareTo(new BigDecimal("8.5")) > 0) {
+            this.taxaAdicional = new BigDecimal("0.0053");
         } else {
-            this.taxaAdicional = getTaxaSelic() * 0.7;
+            this.taxaAdicional = getTaxaSelic().multiply(new BigDecimal("0.7"));
         }
     }
 
@@ -66,29 +68,33 @@ public class InvestPoupanca extends Investimento {
     }
 
     public void setPeriodo() {
-        //Atualiza o período de forma que os rendimentos sejam calculados 
+        //Atualiza o período de forma que os rendimentos sejam calculados
         //a cada 30 dias.
         if (super.getPeriodo() < 30) {
-            this.setRendimentos(0);
+            this.setRendimentos(new BigDecimal("0"));
         } else if (super.getPeriodo() == 30) {
             super.setPeriodo(1);
         } else {
             super.setPeriodo(super.getPeriodo() / 30);
         }
-    }
+    }*/
 
-    @Override
-    public double getIndiceRendimento() {
+        @Override
+        public BigDecimal getIndiceRendimento
+
+            () {
         //Retorna o índice de rendimento que é formado por:
         //Taxa TR e pela taxa adicional que é calulado de acordo com a SELIC
-        setIndiceRendimento(getTaxaAdicional() + this.taxaTr);
-        return super.getIndiceRendimento();
-    }
+        setIndiceRendimento(getTaxaAdicional().add(this.taxaTr));
+            return super.getIndiceRendimento();
+        }
 
-    @Override
-    public double getValorAtualizado() {
-        setValorAtualizado(this.getValor() + this.getRendimentos());
-        return super.getValorAtualizado();
-    }
+        @Override
+        public BigDecimal getValorAtualizado
 
-}
+            () {
+        setValorAtualizado(this.getValor().add(this.getRendimentos()));
+            return super.getValorAtualizado();
+        }
+
+    }
