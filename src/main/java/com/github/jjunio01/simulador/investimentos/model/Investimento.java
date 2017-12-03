@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  * @author Jose Junio
  */
 @Entity
-public abstract class Investimento {
+public class Investimento implements Serializable {
 
     @Id
     @GeneratedValue
@@ -37,7 +37,9 @@ public abstract class Investimento {
 
     }
 
-    public abstract void calcularRendimentos();
+    public void calcularRendimentos() {
+
+    }
 
     public Integer getId() {
         return id;
