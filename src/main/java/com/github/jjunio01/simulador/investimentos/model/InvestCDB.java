@@ -5,6 +5,7 @@
  */
 package com.github.jjunio01.simulador.investimentos.model;
 
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 
 /**
@@ -14,11 +15,11 @@ import javax.persistence.Entity;
 @Entity
 public class InvestCDB extends Investimento {
 
-    private double taxaIR;
-    private final double cdi = 10.14;
-    private double percentCDI = 90;
-    private double rendimentoLiquido;
-    private double iof;
+    private BigDecimal taxaIR;
+    private final BigDecimal cdi = new BigDecimal("10.14");
+    private BigDecimal percentCDI = new BigDecimal("90");
+    private BigDecimal rendimentoLiquido;
+    private BigDecimal iof;
 
     public InvestCDB() {
     }
@@ -27,59 +28,59 @@ public class InvestCDB extends Investimento {
     public void calcularRendimentos() {
 
         for (int i = 0; i < this.getPeriodo(); i++) {
-            setIndiceRendimento(1);
+            setIndiceRendimento(new BigDecimal(1));
             //Calcula o índice de rendimento capitalizados ao dia.
-            setIndiceRendimento(getIndiceRendimento() * Math.pow((Math.pow(((getCdi() / 100) + 1),
-                    0.003968254)), this.getPeriodo()));
+            setIndiceRendimento(getIndiceRendimento().multiply(
+                    new BigDecimal(0.003968254).pow(4)));
         }
         //Atualiza o valor dos rendimentos.
-        this.setRendimentos(((getIndiceRendimento() - 1) * this.getValor()));
+        this.setRendimentos(((getIndiceRendimento().subtract(new BigDecimal(1))).multiply(this.getValor())));
         //Atualiza o valor do rendimento líquido.
-        rendimentoLiquido = getRendimentos() * (1 - getTaxaIR());
+        rendimentoLiquido = getRendimentos().multiply(new BigDecimal(1).subtract(getTaxaIR()));
         //Atualiza valor atualizado(Valor + Jutos).
-        setValorAtualizado(getValor() + rendimentoLiquido - getIof());
+        setValorAtualizado(getValor().add(rendimentoLiquido.subtract(getIof())));
     }
 
-    public double getTaxaIR() {
+    public BigDecimal getTaxaIR() {
         setTaxaIR();
         return taxaIR;
     }
 
     public void setTaxaIR() {
         if (getPeriodo() <= 126) {
-            this.taxaIR = (0.2250);
+            this.taxaIR = new BigDecimal(0.2250);
         } else if (getPeriodo() > 126 && getPeriodo() <= 252) {
-            this.taxaIR = (0.2000);
+            this.taxaIR = new BigDecimal(0.2000);
         } else if (getPeriodo() > 252 && getPeriodo() <= 504) {
-            this.taxaIR = (0.1750);
+            this.taxaIR = new BigDecimal(0.1750);
         } else if (getPeriodo() > 504) {
-            this.taxaIR = (0.1500);
+            this.taxaIR = new BigDecimal(0.1500);
         }
 
     }
 
-    public double getCdi() {
-        return cdi * (getPercentCDI() / 100);
+    public BigDecimal getCdi() {
+        return cdi.multiply(getPercentCDI().divide(new BigDecimal(100)));
     }
 
-    public double getPercentCDI() {
+    public BigDecimal getPercentCDI() {
         return percentCDI;
     }
 
-    public void setPercentCDI(double percentCDI) {
+    public void setPercentCDI(BigDecimal percentCDI) {
         this.percentCDI = percentCDI;
     }
 
-    public double getRendimentoLiquido() {
+    public BigDecimal getRendimentoLiquido() {
 
         return rendimentoLiquido;
     }
 
-    public void setRendimentoLiquido(double rendimentoLiquido) {
+    public void setRendimentoLiquido(BigDecimal rendimentoLiquido) {
         this.rendimentoLiquido = rendimentoLiquido;
     }
 
-    public double getIof() {
+    public BigDecimal getIof() {
         setIof();
         return iof;
     }
@@ -87,20 +88,20 @@ public class InvestCDB extends Investimento {
     public void setIof() {
 
         if (getPeriodo() <= 30) {
-            this.iof = 0;
+            this.iof = new BigDecimal(0);
         } else {
-            this.iof = 0;
+            this.iof = new BigDecimal(0);
         }
     }
 
     @Override
-    public double getValorAtualizado() {
-        setValorAtualizado(this.getValor() + this.getRendimentoLiquido());
+    public BigDecimal getValorAtualizado() {
+        setValorAtualizado(this.getValor().add(this.getRendimentoLiquido()));
         return super.getValorAtualizado();
     }
 
     @Override
-    public void setValorAtualizado(double valorAtualizado) {
+    public void setValorAtualizado(BigDecimal valorAtualizado) {
         super.setValorAtualizado(valorAtualizado);
     }
 
