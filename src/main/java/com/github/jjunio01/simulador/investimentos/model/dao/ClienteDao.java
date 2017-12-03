@@ -26,7 +26,7 @@ public class ClienteDao implements DaoGenerico<Cliente> {
     private ClienteDao() {
     }
 
-    //Método para criar instancia única de ClienteDAO
+    //Método para criar instancia única de ClienteDao
     public static ClienteDao getInstance() {
 
         if (instance == null) {

@@ -30,7 +30,7 @@ public class DaoBancoMySql {
         this.sessionFactory = abrirSession();
     }
 
-    //Obtém uma instancia única do DAOBancoMySql
+    //Obtém uma instancia única do DaoBancoMySql
     public static DaoBancoMySql getInstance() throws ErroSistema {
 
         if (instance == null) {
