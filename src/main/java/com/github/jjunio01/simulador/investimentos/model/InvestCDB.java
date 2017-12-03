@@ -5,6 +5,7 @@
  */
 package com.github.jjunio01.simulador.investimentos.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
 
@@ -13,7 +14,7 @@ import javax.persistence.Entity;
  * @author Jose Junio
  */
 @Entity
-public class InvestCDB extends Investimento {
+public class InvestCDB extends Investimento implements Serializable {
 
     private BigDecimal taxaIR;
     private final BigDecimal cdi = new BigDecimal("10.14");
