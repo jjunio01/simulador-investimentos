@@ -20,7 +20,7 @@ public class Poupanca {
     public void testarRendimentoPoupancaNaoVazio() throws ErroSistema {
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setPeriodo(30);
-        poupanca.setValor(200);
+        //   poupanca.setValor(200);
         ControllerInvestimento controller = new ControllerInvestimento();
         controller.setPoupanca(poupanca);
         controller.calcularRendimentos(poupanca);
