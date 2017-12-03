@@ -7,7 +7,7 @@ package com.github.jjunio01.simulador.investimentos.controller;
 
 import com.github.jjunio01.simulador.investimentos.model.Cliente;
 import com.github.jjunio01.simulador.investimentos.model.Usuario;
-import com.github.jjunio01.simulador.investimentos.model.dao.ClienteDAO;
+import com.github.jjunio01.simulador.investimentos.model.dao.ClienteDao;
 import com.github.jjunio01.simulador.investimentos.util.Criptografia;
 import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import com.github.jjunio01.simulador.investimentos.util.Message;
@@ -42,15 +42,15 @@ public class ControllerCliente {
     public void salvar(Cliente clienteNovo) throws ErroSistema, IOException {
         try {
             //Verifica se já existe cadastrado um cliente com o CPF e Login informados.
-            Cliente novo = ClienteDAO.getInstance().read(clienteNovo.getCpf());
-            Usuario novoLogin = ClienteDAO.getInstance().readLogin(clienteNovo.getUsuario().getLogin());
+            Cliente novo = ClienteDao.getInstance().read(clienteNovo.getCpf());
+            Usuario novoLogin = ClienteDao.getInstance().readLogin(clienteNovo.getUsuario().getLogin());
             if (novo == null && novoLogin == null) {
                 //Criptograva a senha e seta no usuário cliente.
                 Usuario usurioNovo = clienteNovo.getUsuario();
                 usurioNovo.setSenha(Criptografia.criptografarSenha(clienteNovo.getUsuario().getSenha()));
                 clienteNovo.setUsuario(usurioNovo);
                 //Salva o cliente no banco de dados.
-                ClienteDAO.getInstance().create(clienteNovo);
+                ClienteDao.getInstance().create(clienteNovo);
                 Message.getInstance().adicionarMensagem(null, "Cliente Salvo com sucesso", FacesMessage.SEVERITY_INFO);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             } else {
@@ -68,12 +68,12 @@ public class ControllerCliente {
             Cliente clienteLogado = (Cliente) FacesContext.getCurrentInstance().
                     getExternalContext().getSessionMap().get("user");
             if (clienteLogado.getCpf().equals(this.cliente.getCpf())) {
-                Cliente novo = ClienteDAO.getInstance().read(this.cliente.getCpf());
+                Cliente novo = ClienteDao.getInstance().read(this.cliente.getCpf());
                 if (novo == null) {
                     Message.getInstance().adicionarMensagem(null, "Cliente não encontrado para este CPF:", FacesMessage.SEVERITY_ERROR);
                 } else {
                     //Deleta o cliente.
-                    ClienteDAO.getInstance().delete(this.cliente.getCpf());
+                    ClienteDao.getInstance().delete(this.cliente.getCpf());
                     Message.getInstance().adicionarMensagem(null, "Cadastro excluído com sucesso", FacesMessage.SEVERITY_INFO);
                     //Retira o cliente da sessão
                     FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -93,13 +93,13 @@ public class ControllerCliente {
 
         try {
             //Recupera o cliente do banco de dados.
-            Cliente novo = ClienteDAO.getInstance().read(cliente.getCpf());
+            Cliente novo = ClienteDao.getInstance().read(cliente.getCpf());
             //Atualiza os valores
             novo.setDataNasc(cliente.getDataNasc());
             novo.setEmail(cliente.getEmail());
             novo.setNome(cliente.getNome());
             //Salva as alterações no banco de dados.
-            ClienteDAO.getInstance().update(novo);
+            ClienteDao.getInstance().update(novo);
             Message.getInstance().adicionarMensagem(null, "Cadastro alterado com sucesso", FacesMessage.SEVERITY_INFO);
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         } catch (ErroSistema erroAlterar) {
@@ -112,7 +112,7 @@ public class ControllerCliente {
     public void consultar(String cpf) throws ErroSistema {
         try {
             //Recupera o cliente do banco de dados.
-            this.cliente = ClienteDAO.getInstance().read(cpf);
+            this.cliente = ClienteDao.getInstance().read(cpf);
             if (cliente == null) {
                 Message.getInstance().adicionarMensagem(null, " Não encontrado Cliente para o CPF informado", FacesMessage.SEVERITY_ERROR);
                 this.cliente = new Cliente();
@@ -124,7 +124,7 @@ public class ControllerCliente {
 
     public List<Cliente> consultarTodos() throws ErroSistema {
         //Recupera todos os clientes do banco de dados.
-        List<Cliente> clientes = ClienteDAO.getInstance().readALL();
+        List<Cliente> clientes = ClienteDao.getInstance().readALL();
         if (clientes == null || clientes.isEmpty()) {
             Message.getInstance().adicionarMensagem(null, "Não existem clientes cadastrados no sistema", FacesMessage.SEVERITY_ERROR);
         }

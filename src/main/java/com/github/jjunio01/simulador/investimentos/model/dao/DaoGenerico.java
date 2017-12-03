@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Jose Junio
  */
-public interface DAOGenerico<T> {
+public interface DaoGenerico<T> {
 
     public void create(T t) throws ErroSistema;
 

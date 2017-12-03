@@ -17,24 +17,24 @@ import org.hibernate.exception.JDBCConnectionException;
  *
  * @author Jose Junio
  */
-public class DAOBancoMySql {
+public class DaoBancoMySql {
 
-    private static DAOBancoMySql instance;
+    private static DaoBancoMySql instance;
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
-    private DAOBancoMySql() throws ErroSistema {
+    private DaoBancoMySql() throws ErroSistema {
         this.sessionFactory = abrirSession();
     }
 
-    //Obtém uma instancia única do DAOBancoMySql
-    public static DAOBancoMySql getInstance() throws ErroSistema {
+    //Obtém uma instancia única do DaoBancoMySql
+    public static DaoBancoMySql getInstance() throws ErroSistema {
 
         if (instance == null) {
-            instance = new DAOBancoMySql();
+            instance = new DaoBancoMySql();
         }
         return instance;
     }

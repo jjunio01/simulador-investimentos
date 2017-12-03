@@ -15,18 +15,18 @@ import org.hibernate.Session;
  *
  * @author Jose Junio
  */
-public class InvestimentoDAO {
+public class InvestimentoDao {
 
-    private static InvestimentoDAO instance;
+    private static InvestimentoDao instance;
 
-    private InvestimentoDAO() {
+    private InvestimentoDao() {
     }
 
     //Método que cria uma instância única de InvetimentoDAO
-    public static InvestimentoDAO getInstance() {
+    public static InvestimentoDao getInstance() {
 
         if (instance == null) {
-            instance = new InvestimentoDAO();
+            instance = new InvestimentoDao();
         }
         return instance;
     }
@@ -34,25 +34,25 @@ public class InvestimentoDAO {
     //Método para salvar uma Poupanca
     public void salvar(InvestPoupanca poupanca) throws ErroSistema {
         //Abre uma conexão com o banco e inicia uma trasação
-        Session session = DAOBancoMySql.iniciarTransacao();
+        Session session = DaoBancoMySql.iniciarTransacao();
         //Salva o objeto no banco de dados.
         session.saveOrUpdate(poupanca);
         //Recupera a sessão aberta encerra a transação e fecha a conexão;
-        DAOBancoMySql.fecharTransacao(session);
+        DaoBancoMySql.fecharTransacao(session);
     }
 
     //Método para salvar uma CDB
     public void salvar(InvestCDB cdb) throws ErroSistema {
-        Session session = DAOBancoMySql.iniciarTransacao();
+        Session session = DaoBancoMySql.iniciarTransacao();
         session.saveOrUpdate(cdb);
-        DAOBancoMySql.fecharTransacao(session);
+        DaoBancoMySql.fecharTransacao(session);
     }
 
     //Método para salvar uma LCI
     public void salvarLCI(InvestLCI lci) throws ErroSistema {
-        Session session = DAOBancoMySql.iniciarTransacao();
+        Session session = DaoBancoMySql.iniciarTransacao();
         session.saveOrUpdate(lci);
-        DAOBancoMySql.fecharTransacao(session);
+        DaoBancoMySql.fecharTransacao(session);
     }
 
 }
