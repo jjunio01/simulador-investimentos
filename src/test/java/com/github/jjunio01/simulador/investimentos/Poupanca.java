@@ -18,14 +18,14 @@ import org.junit.Test;
 public class Poupanca {
 
     @Test
-    public void testarArredondamentoDoRendimento() {
+    public void testarValorAtualizadoDaPoupanca() {
 
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setPeriodo(30);
         poupanca.setValor(new BigDecimal("1000"));
         poupanca.calcularRendimentos();
         BigDecimal valor = new BigDecimal("1000");
-        //0.0053 + 0.0000903
+        //0.0053(Taxa Adicional) + 0.0000903(TR)
         BigDecimal taxa = new BigDecimal("0.0000903").add(new BigDecimal("0.0053"));
         BigDecimal resultadoTeste = valor.multiply(taxa).add(valor);
         Assert.assertEquals(poupanca.getValorAtualizado(), resultadoTeste);
