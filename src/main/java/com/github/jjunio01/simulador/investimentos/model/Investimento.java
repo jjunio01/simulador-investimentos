@@ -6,6 +6,7 @@
 package com.github.jjunio01.simulador.investimentos.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public abstract class Investimento implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
-    private double valor;
+    private BigDecimal valor;
     private int periodo;
     private double rendimentos;
     private double indiceRendimento;
@@ -35,18 +36,18 @@ public abstract class Investimento implements Serializable {
     public Investimento() {
 
     }
-    
+
     public abstract void calcularRendimentos();
 
     public Integer getId() {
         return id;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
