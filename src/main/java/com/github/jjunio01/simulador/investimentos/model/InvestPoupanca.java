@@ -28,10 +28,9 @@ public class InvestPoupanca extends Investimento implements Serializable {
     public void calcularRendimentos() {
         //Calcula os juros mensais do valor, utilizando juros compostos.
         if (super.getPeriodo() >= 30) {
-            MathContext mc = new MathContext(4);
+            MathContext mc = new MathContext(8);
             this.setRendimentos(this.getValor().multiply(
-                    getIndiceRendimento().add((new BigDecimal("1"))).pow(3, mc)));
-
+                    getIndiceRendimento()));
         }
 
     }

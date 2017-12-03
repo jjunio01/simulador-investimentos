@@ -5,9 +5,10 @@
  */
 package com.github.jjunio01.simulador.investimentos;
 
-import com.github.jjunio01.simulador.investimentos.controller.ControllerInvestimento;
 import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
-import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -17,18 +18,17 @@ import org.junit.Test;
 public class Poupanca {
 
     @Test
-    public void testarRendimentoPoupancaNaoVazio() throws ErroSistema {
+    public void testarArredondamentoDoRendimento() {
+
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setPeriodo(30);
-        //   poupanca.setValor(200);
-        ControllerInvestimento controller = new ControllerInvestimento();
-        controller.setPoupanca(poupanca);
-        controller.calcularRendimentos(poupanca);
+        poupanca.setValor(new BigDecimal("1000"));
+        poupanca.calcularRendimentos();
+        BigDecimal valor = new BigDecimal("1000");
+        //0.0053 + 0.0000903
+        BigDecimal taxa = new BigDecimal("0.0000903").add(new BigDecimal("0.0053"));
+        BigDecimal resultadoTeste = valor.multiply(taxa).add(valor);
+        Assert.assertEquals(poupanca.getValorAtualizado(), resultadoTeste);
+
     }
-
-    @Test
-    public void testarValorRendimentoPoupanca() {
-
-    }
-
 }
