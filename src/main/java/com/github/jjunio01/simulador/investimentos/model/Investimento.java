@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  * @author Jose Junio
  */
 @Entity
-public abstract class Investimento implements Serializable {
+public abstract class Investimento {
 
     @Id
     @GeneratedValue

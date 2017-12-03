@@ -6,6 +6,7 @@
 package com.github.jjunio01.simulador.investimentos.model;
 
 import com.github.jjunio01.simulador.investimentos.util.Message;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.faces.application.FacesMessage;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import javax.persistence.Entity;
  * @author Jose Junio
  */
 @Entity
-public class InvestLCI extends Investimento {
+public class InvestLCI extends Investimento implements Serializable {
 
     private final BigDecimal cdi = new BigDecimal("10.14");
     private BigDecimal percentCDI = new BigDecimal("80");

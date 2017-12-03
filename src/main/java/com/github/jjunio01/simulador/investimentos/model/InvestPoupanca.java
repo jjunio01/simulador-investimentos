@@ -5,6 +5,7 @@
  */
 package com.github.jjunio01.simulador.investimentos.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import javax.persistence.Entity;
@@ -14,7 +15,7 @@ import javax.persistence.Entity;
  * @author Jose Junio
  */
 @Entity
-public class InvestPoupanca extends Investimento {
+public class InvestPoupanca extends Investimento implements Serializable {
 
     private BigDecimal taxaTr = new BigDecimal("0.0000903");
     private BigDecimal taxaSelic = new BigDecimal("10.15");
