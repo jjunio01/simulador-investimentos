@@ -6,7 +6,7 @@
 package com.github.jjunio01.simulador.investimentos.controller;
 
 import com.github.jjunio01.simulador.investimentos.model.Cliente;
-import com.github.jjunio01.simulador.investimentos.model.dao.ClienteDAO;
+import com.github.jjunio01.simulador.investimentos.model.dao.ClienteDao;
 import com.github.jjunio01.simulador.investimentos.util.Criptografia;
 import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import com.github.jjunio01.simulador.investimentos.util.Message;
@@ -33,7 +33,7 @@ public class ControllerLogin {
 
         Cliente clienteTeste;
         //Consulta se existe um cliente cadastrado para o Login informado.
-        clienteTeste = ClienteDAO.getInstance().readLogado(login);
+        clienteTeste = ClienteDao.getInstance().readLogado(login);
         if (clienteTeste == null) {
             Message.getInstance().adicionarMensagem("Erro", "O Login informado não existe.", FacesMessage.SEVERITY_ERROR);
             return null;

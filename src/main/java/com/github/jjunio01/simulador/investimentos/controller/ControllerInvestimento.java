@@ -9,7 +9,7 @@ import com.github.jjunio01.simulador.investimentos.model.InvestCDB;
 import com.github.jjunio01.simulador.investimentos.model.InvestLCI;
 import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
 import com.github.jjunio01.simulador.investimentos.model.Investimento;
-import com.github.jjunio01.simulador.investimentos.model.dao.InvestimentoDAO;
+import com.github.jjunio01.simulador.investimentos.model.dao.InvestimentoDao;
 import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +28,7 @@ public class ControllerInvestimento {
     private InvestPoupanca poupanca = new InvestPoupanca();
     private InvestCDB cdb = new InvestCDB();
     private InvestLCI lci = new InvestLCI();
-    private InvestimentoDAO investDao = InvestimentoDAO.getInstance();
+    private InvestimentoDao investDao = InvestimentoDao.getInstance();
     private int tipoPrazo;
     private List<Investimento> listaInvestimentos;
 
