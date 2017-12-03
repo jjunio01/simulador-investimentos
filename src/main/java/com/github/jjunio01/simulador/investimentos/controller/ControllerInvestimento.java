@@ -11,6 +11,7 @@ import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
 import com.github.jjunio01.simulador.investimentos.model.Investimento;
 import com.github.jjunio01.simulador.investimentos.model.dao.InvestimentoDao;
 import com.github.jjunio01.simulador.investimentos.util.ErroSistema;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +78,7 @@ public class ControllerInvestimento {
         }
     }
 
-    public void compararInvestimentos(int periodo, double valor) throws ErroSistema {
+    public void compararInvestimentos(int periodo, BigDecimal valor) throws ErroSistema {
         //Setta o valor e o período.
         poupanca.setValor(valor);
         poupanca.setPeriodo(periodo * tipoPrazo);
