@@ -26,9 +26,9 @@ public abstract class Investimento implements Serializable {
     private Integer id;
     private BigDecimal valor;
     private int periodo;
-    private double rendimentos;
-    private double indiceRendimento;
-    private double valorAtualizado;
+    private BigDecimal rendimentos;
+    private BigDecimal indiceRendimento;
+    private BigDecimal valorAtualizado;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAcesso;
     private String tipo;
@@ -60,27 +60,27 @@ public abstract class Investimento implements Serializable {
         this.periodo = periodo;
     }
 
-    public double getRendimentos() {
+    public BigDecimal getRendimentos() {
         return rendimentos;
     }
 
-    public void setRendimentos(double rendimentos) {
+    public void setRendimentos(BigDecimal rendimentos) {
         this.rendimentos = rendimentos;
     }
 
-    public double getIndiceRendimento() {
+    public BigDecimal getIndiceRendimento() {
         return indiceRendimento;
     }
 
-    public void setIndiceRendimento(double indiceRendimento) {
+    public void setIndiceRendimento(BigDecimal indiceRendimento) {
         this.indiceRendimento = indiceRendimento;
     }
 
-    public double getValorAtualizado() {
+    public BigDecimal getValorAtualizado() {
         return valorAtualizado;
     }
 
-    public void setValorAtualizado(double valorAtualizado) {
+    public void setValorAtualizado(BigDecimal valorAtualizado) {
         this.valorAtualizado = valorAtualizado;
     }
 
