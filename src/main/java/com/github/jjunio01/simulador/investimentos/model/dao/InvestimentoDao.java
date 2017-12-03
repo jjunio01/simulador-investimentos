@@ -22,7 +22,7 @@ public class InvestimentoDao {
     private InvestimentoDao() {
     }
 
-    //Método que cria uma instância única de InvetimentoDAO
+    //Método que cria uma instância única de InvetimentoDao
     public static InvestimentoDao getInstance() {
 
         if (instance == null) {
