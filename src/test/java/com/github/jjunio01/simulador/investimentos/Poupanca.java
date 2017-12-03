@@ -7,7 +7,6 @@ package com.github.jjunio01.simulador.investimentos;
 
 import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
 
