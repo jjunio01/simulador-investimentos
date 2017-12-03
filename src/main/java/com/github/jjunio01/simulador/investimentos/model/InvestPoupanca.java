@@ -32,7 +32,10 @@ public class InvestPoupanca extends Investimento {
                     getIndiceRendimento().add((new BigDecimal("1"))).pow(3, mc)));
 
         }
-        /*public BigDecimal getTaxaTr() {
+
+    }
+
+    public BigDecimal getTaxaTr() {
         return taxaTr;
     }
 
@@ -77,24 +80,20 @@ public class InvestPoupanca extends Investimento {
         } else {
             super.setPeriodo(super.getPeriodo() / 30);
         }
-    }*/
+    }
 
-        @Override
-        public BigDecimal getIndiceRendimento
-
-            () {
+    @Override
+    public BigDecimal getIndiceRendimento() {
         //Retorna o índice de rendimento que é formado por:
         //Taxa TR e pela taxa adicional que é calulado de acordo com a SELIC
         setIndiceRendimento(getTaxaAdicional().add(this.taxaTr));
-            return super.getIndiceRendimento();
-        }
-
-        @Override
-        public BigDecimal getValorAtualizado
-
-            () {
-        setValorAtualizado(this.getValor().add(this.getRendimentos()));
-            return super.getValorAtualizado();
-        }
-
+        return super.getIndiceRendimento();
     }
+
+    @Override
+    public BigDecimal getValorAtualizado() {
+        setValorAtualizado(this.getValor().add(this.getRendimentos()));
+        return super.getValorAtualizado();
+    }
+
+}
