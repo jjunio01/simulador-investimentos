@@ -7,6 +7,7 @@ package com.github.jjunio01.simulador.investimentos.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import javax.persistence.Entity;
 
@@ -28,7 +29,7 @@ public class InvestPoupanca extends Investimento implements Serializable {
     public void calcularRendimentos() {
         //Calcula os juros mensais do valor, utilizando juros compostos.
         if (super.getPeriodo() >= 30) {
-            MathContext mc = new MathContext(8);
+            MathContext mc = new MathContext(9);
             this.setRendimentos(this.getValor().multiply(
                     getIndiceRendimento()));
         }
@@ -58,10 +59,22 @@ public class InvestPoupanca extends Investimento implements Serializable {
 
     public void setTaxaAdicional() {
         //Atualiza a taxa de rendimento adicional de acordo com a Taxa Selic Vigente
-        if (taxaSelic.compareTo(new BigDecimal("8.5")) > 0) {
+        if (this.taxaSelic.compareTo(new BigDecimal("8.5000000")) > 0) {
             this.taxaAdicional = new BigDecimal("0.0053");
         } else {
-            this.taxaAdicional = getTaxaSelic().multiply(new BigDecimal("0.7"));
+            //Capitalizando a taxa ao mês (im = ((1 + 1a) ^ 1/12 )- 1);
+            BigDecimal taxaVariavel;
+            taxaVariavel = this.taxaSelic.multiply(new BigDecimal("0.70000000")).abs(new MathContext(9));
+            taxaVariavel = taxaVariavel.divide(new BigDecimal("100.00000000"));
+            taxaVariavel = taxaVariavel.add(new BigDecimal("1.00000000"));
+
+            BigDecimal tempo = (new BigDecimal("1.0000000").divide(
+                    new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).abs(new MathContext(4));
+
+            taxaVariavel = new BigDecimal(Math.pow(taxaVariavel.floatValue(), tempo.floatValue()));
+            taxaVariavel = taxaVariavel.subtract(new BigDecimal("1.00000000"));
+
+            this.taxaAdicional = (taxaVariavel);
         }
     }
 
