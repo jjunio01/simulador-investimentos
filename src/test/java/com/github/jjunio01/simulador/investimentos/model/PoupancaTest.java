@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.jjunio01.simulador.investimentos;
+package com.github.jjunio01.simulador.investimentos.model;
 
-import com.github.jjunio01.simulador.investimentos.model.InvestPoupanca;
-import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,13 +15,14 @@ import java.math.RoundingMode;
  *
  * @author Jose Junio
  */
-public class Poupanca {
+public class PoupancaTest {
 
     @Test
+
     public void testarValorAtualizadoDaPoupanca() {
 
         InvestPoupanca poupanca = new InvestPoupanca();
-        poupanca.setPeriodo(30);
+        poupanca.setPeriodo(1);
         poupanca.setValor(new BigDecimal("1000").abs(new MathContext(9)));
         poupanca.calcularRendimentos();
         BigDecimal valor = new BigDecimal("1000").abs(new MathContext(8));
@@ -45,8 +44,8 @@ public class Poupanca {
         //Calculando índice de rendimento
         indiceRendimento = taxaTR.add(taxaVariavel).abs(new MathContext(9));
         //Atualizando o valor
-        valorAtualizado = valor.multiply(indiceRendimento).add(valor).setScale(2, RoundingMode.CEILING);
+        valorAtualizado = valor.multiply(indiceRendimento).pow(poupanca.getPeriodo()).add(valor).setScale(2, RoundingMode.CEILING);
         Assert.assertEquals(poupanca.getValorAtualizado().setScale(2, RoundingMode.CEILING), valorAtualizado);
-
     }
+
 }

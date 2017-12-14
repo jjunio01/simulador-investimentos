@@ -7,7 +7,6 @@ package com.github.jjunio01.simulador.investimentos.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import javax.persistence.Entity;
 
@@ -28,13 +27,8 @@ public class InvestPoupanca extends Investimento implements Serializable {
     @Override
     public void calcularRendimentos() {
         //Calcula os juros mensais do valor, utilizando juros compostos.
-        if (super.getPeriodo() >= 30) {
-            if (super.getPeriodo() == 30) {
-                MathContext mc = new MathContext(9);
-                this.setRendimentos(this.getValor().multiply(
-                        getIndiceRendimento()));
-            }
-        }
+        this.setRendimentos(this.getValor().multiply(
+                getIndiceRendimento()).pow(super.getPeriodo()));
 
     }
 
