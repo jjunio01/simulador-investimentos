@@ -19,7 +19,7 @@ public class PoupancaTest {
 
     @Test
 
-    public void testarValorAtualizadoDaPoupanca() {
+    public void testCalcularRendimentosPoupanca() {
 
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setPeriodo(1);
