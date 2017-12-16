@@ -70,7 +70,7 @@ public class InvestPoupanca extends Investimento implements Serializable {
             taxaVariavel = new BigDecimal(Math.pow(taxaVariavel.floatValue(), tempo.floatValue()));
             taxaVariavel = taxaVariavel.subtract(new BigDecimal("1.00000000"));
 
-            this.taxaAdicional = (taxaVariavel);
+            this.taxaAdicional = (taxaVariavel.abs(new MathContext(4)));
         }
     }
 
