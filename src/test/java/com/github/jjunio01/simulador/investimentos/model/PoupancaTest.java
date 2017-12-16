@@ -9,6 +9,7 @@ import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 
 /**
@@ -46,6 +47,27 @@ public class PoupancaTest {
         //Atualizando o valor
         valorAtualizado = valor.multiply(indiceRendimento).pow(poupanca.getPeriodo()).add(valor).setScale(2, RoundingMode.CEILING);
         Assert.assertEquals(poupanca.getValorAtualizado().setScale(2, RoundingMode.CEILING), valorAtualizado);
+    }
+
+    @Test
+    public void testTaxaAdicional() {
+        BigDecimal taxaSelicTest = new BigDecimal("7.90000000");
+        BigDecimal taxaAdicional;
+        taxaAdicional = taxaSelicTest.multiply(new BigDecimal("0.70000000"));
+        taxaAdicional = taxaAdicional.divide(new BigDecimal("100.00000000"));
+        //Capitalizando ao mês;
+        taxaAdicional = taxaAdicional.add(new BigDecimal("1.00000000"));
+        BigDecimal tempo = (new BigDecimal("1.0000000").divide(
+                new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).abs(new MathContext(4));
+
+        taxaAdicional = new BigDecimal(Math.pow(taxaAdicional.floatValue(), tempo.floatValue()));
+        taxaAdicional = taxaAdicional.subtract(new BigDecimal("1.00000000"));
+        taxaAdicional = taxaAdicional.abs(new MathContext(4));
+
+        InvestPoupanca poupanca = new InvestPoupanca();
+        System.out.println(taxaAdicional.abs());
+        Assert.assertEquals(taxaAdicional, poupanca.getTaxaAdicional());
+
     }
 
 }
