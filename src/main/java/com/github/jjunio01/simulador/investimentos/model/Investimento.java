@@ -7,6 +7,7 @@ package com.github.jjunio01.simulador.investimentos.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -100,6 +101,17 @@ public class Investimento implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public static BigDecimal formataNumero(BigDecimal numero) {
+
+        return numero.setScale(2, RoundingMode.CEILING);
+
+    }
+
+    public static BigDecimal formatarTaxa(BigDecimal taxa) {
+
+        return taxa.setScale(8, RoundingMode.CEILING);
     }
 
 }
