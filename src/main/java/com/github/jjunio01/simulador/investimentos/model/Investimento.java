@@ -80,11 +80,17 @@ public class Investimento implements Serializable {
     }
 
     public BigDecimal getValorAtualizado() {
+        setValorAtualizado();
         return valorAtualizado;
     }
 
     public void setValorAtualizado(BigDecimal valorAtualizado) {
         this.valorAtualizado = valorAtualizado;
+    }
+
+    private void setValorAtualizado() {
+
+        this.valorAtualizado = this.getValor().add(this.rendimentos);
     }
 
     public Date getDataAcesso() {
@@ -103,7 +109,7 @@ public class Investimento implements Serializable {
         this.tipo = tipo;
     }
 
-    public static BigDecimal formataNumero(BigDecimal numero) {
+    public static BigDecimal formatarNumero(BigDecimal numero) {
 
         return numero.setScale(2, RoundingMode.CEILING);
 
