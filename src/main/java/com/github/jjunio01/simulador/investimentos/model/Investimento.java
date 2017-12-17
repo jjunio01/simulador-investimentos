@@ -90,7 +90,7 @@ public class Investimento implements Serializable {
 
     private void setValorAtualizado() {
 
-        this.valorAtualizado = this.getValor().add(this.rendimentos);
+        this.valorAtualizado = formatarNumero(this.getValor().add(this.rendimentos));
     }
 
     public Date getDataAcesso() {

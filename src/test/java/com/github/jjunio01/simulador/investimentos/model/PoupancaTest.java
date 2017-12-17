@@ -9,8 +9,8 @@ import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
+import org.junit.Ignore;
 
 /**
  *
@@ -19,55 +19,77 @@ import java.math.RoundingMode;
 public class PoupancaTest {
 
     @Test
-
     public void testCalcularRendimentosPoupanca() {
 
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setPeriodo(1);
-        poupanca.setValor(new BigDecimal("1000").abs(new MathContext(9)));
+        poupanca.setValor(Investimento.formatarNumero(new BigDecimal("1000")));
         poupanca.calcularRendimentos();
-        BigDecimal valor = new BigDecimal("1000").abs(new MathContext(8));
+        BigDecimal valor = Investimento.formatarNumero(new BigDecimal("1000"));
         BigDecimal valorAtualizado;
-        BigDecimal taxaTR = new BigDecimal("0.00000000");
+        BigDecimal taxaTR = Investimento.formatarTaxa(new BigDecimal("0.0"));
         BigDecimal indiceRendimento;
-        BigDecimal taxaSelic = new BigDecimal("7.50000000");
+        BigDecimal taxaSelic = Investimento.formatarNumero(new BigDecimal("7.5"));
         BigDecimal taxaVariavel;
         //taxaVariável - Se taxaSelic > 8.5% a.a = 0.5% a.m.
         //tavaVariável - Se taxaSelic <= 8.5% a.a. = taxaSelic * 0.7 capitalizado ao mês
-        taxaVariavel = taxaSelic.multiply(new BigDecimal("0.70000000")).abs(new MathContext(9));
+        taxaVariavel = Investimento.formatarTaxa(taxaSelic.multiply(new BigDecimal("0.7")));
         //Capitalizando a taxa ao mês
-        taxaVariavel = taxaVariavel.divide(new BigDecimal("100.00000000"));
-        taxaVariavel = taxaVariavel.add(new BigDecimal("1.00000000"));
+        taxaVariavel = Investimento.formatarTaxa(taxaVariavel.divide(new BigDecimal("100")));
+        taxaVariavel = Investimento.formatarTaxa(taxaVariavel.add(new BigDecimal("1")));
         BigDecimal tempo = (new BigDecimal("1.0000000").divide(
                 new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).abs(new MathContext(4));
         taxaVariavel = new BigDecimal(Math.pow(taxaVariavel.floatValue(), tempo.floatValue()));
-        taxaVariavel = taxaVariavel.subtract(new BigDecimal("1.00000000"));
+        taxaVariavel = Investimento.formatarTaxa(taxaVariavel.subtract(new BigDecimal("1")));
         //Calculando índice de rendimento
-        indiceRendimento = taxaTR.add(taxaVariavel).abs(new MathContext(9));
+        indiceRendimento = Investimento.formatarTaxa(taxaTR.add(taxaVariavel));
         //Atualizando o valor
-        valorAtualizado = valor.multiply(indiceRendimento).pow(poupanca.getPeriodo()).add(valor).setScale(2, RoundingMode.CEILING);
-        Assert.assertEquals(poupanca.getValorAtualizado().setScale(2, RoundingMode.CEILING), valorAtualizado);
+        valorAtualizado = valor.multiply(indiceRendimento).pow(1).add(valor);
+        Assert.assertEquals(poupanca.getValorAtualizado(), Investimento.formatarNumero(valorAtualizado));
     }
 
-    @Test
+    //@Test
     public void testTaxaAdicional() {
-        BigDecimal taxaSelicTest = new BigDecimal("7.90000000");
+        BigDecimal taxaSelicTest = Investimento.formatarTaxa(new BigDecimal("7.5"));
         BigDecimal taxaAdicional;
-        taxaAdicional = taxaSelicTest.multiply(new BigDecimal("0.70000000"));
-        taxaAdicional = taxaAdicional.divide(new BigDecimal("100.00000000"));
+        taxaAdicional = Investimento.formatarTaxa(taxaSelicTest.multiply(new BigDecimal("0.7")));
+        taxaAdicional = Investimento.formatarTaxa(taxaAdicional.divide(new BigDecimal("100")));
         //Capitalizando ao mês;
-        taxaAdicional = taxaAdicional.add(new BigDecimal("1.00000000"));
+        taxaAdicional = Investimento.formatarTaxa(taxaAdicional.add(new BigDecimal("1")));
         BigDecimal tempo = (new BigDecimal("1.0000000").divide(
                 new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).abs(new MathContext(4));
 
-        taxaAdicional = new BigDecimal(Math.pow(taxaAdicional.floatValue(), tempo.floatValue()));
-        taxaAdicional = taxaAdicional.subtract(new BigDecimal("1.00000000"));
-        taxaAdicional = taxaAdicional.abs(new MathContext(4));
+        taxaAdicional = Investimento.formatarTaxa(new BigDecimal(Math.pow(taxaAdicional.floatValue(), tempo.floatValue())));
+        taxaAdicional = Investimento.formatarTaxa(taxaAdicional.subtract(new BigDecimal("1")));
 
         InvestPoupanca poupanca = new InvestPoupanca();
-        System.out.println(taxaAdicional.abs());
-        Assert.assertEquals(taxaAdicional, poupanca.getTaxaAdicional());
+        System.out.println(taxaAdicional);
+        Assert.assertEquals(poupanca.getTaxaAdicional(), taxaAdicional);
 
     }
 
+    @Test
+    public void testPoupancaValoZero() {
+
+        BigDecimal valorZero = new BigDecimal("0.00000000");
+        InvestPoupanca poupanca = new InvestPoupanca();
+        poupanca.setPeriodo(1);
+        poupanca.setValor(valorZero);
+        poupanca.calcularRendimentos();
+        valorZero = valorZero.setScale(2, RoundingMode.CEILING);
+        Assert.assertEquals(poupanca.getValorAtualizado().setScale(2, RoundingMode.CEILING), valorZero);
+    }
+
+    @Test
+    public void testFormatarTaxa() {
+
+        BigDecimal taxa = new BigDecimal("8.7");
+        taxa = taxa.setScale(8, RoundingMode.CEILING);
+        Assert.assertEquals(Investimento.formatarTaxa(taxa), taxa);
+    }
+
+    //@Test
+    public void testPoupancaValorNegativo() {
+
+    }
 }

@@ -7,7 +7,7 @@ package com.github.jjunio01.simulador.investimentos.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.MathContext;
+import java.math.RoundingMode;
 import javax.persistence.Entity;
 
 /**
@@ -17,11 +17,14 @@ import javax.persistence.Entity;
 @Entity
 public class InvestPoupanca extends Investimento implements Serializable {
 
-    private BigDecimal taxaTr = new BigDecimal("0.0000000");
-    private BigDecimal taxaSelic = new BigDecimal("7.5000000");
+    private BigDecimal taxaTr = new BigDecimal("0.0");
+    private BigDecimal taxaSelic = new BigDecimal("7.5");
     private BigDecimal taxaAdicional;
 
     public InvestPoupanca() {
+        this.taxaTr = Investimento.formatarTaxa(this.taxaTr);
+        this.taxaSelic = Investimento.formatarTaxa(this.taxaSelic);
+        super.setRendimentos(Investimento.formatarNumero(new BigDecimal("0")));
     }
 
     @Override
@@ -55,22 +58,22 @@ public class InvestPoupanca extends Investimento implements Serializable {
 
     public void setTaxaAdicional() {
         //Atualiza a taxa de rendimento adicional de acordo com a Taxa Selic Vigente
-        if (this.taxaSelic.compareTo(new BigDecimal("8.5000000")) > 0) {
-            this.taxaAdicional = new BigDecimal("0.0053");
+        if (this.taxaSelic.compareTo(Investimento.formatarTaxa(new BigDecimal("8.5"))) > 0) {
+            this.taxaAdicional = Investimento.formatarTaxa(new BigDecimal("0.0053"));
         } else {
             //Capitalizando a taxa ao mês (im = ((1 + 1a) ^ 1/12 )- 1);
             BigDecimal taxaVariavel;
-            taxaVariavel = this.taxaSelic.multiply(new BigDecimal("0.70000000")).abs(new MathContext(9));
-            taxaVariavel = taxaVariavel.divide(new BigDecimal("100.00000000"));
-            taxaVariavel = taxaVariavel.add(new BigDecimal("1.00000000"));
+            taxaVariavel = Investimento.formatarTaxa(this.taxaSelic.multiply(new BigDecimal("0.7")));
+            taxaVariavel = Investimento.formatarTaxa(taxaVariavel.divide(new BigDecimal("100.0")));
+            taxaVariavel = Investimento.formatarTaxa(taxaVariavel.add(new BigDecimal("1.0")));
 
             BigDecimal tempo = (new BigDecimal("1.0000000").divide(
-                    new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).abs(new MathContext(4));
+                    new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).setScale(4, RoundingMode.CEILING);;
 
             taxaVariavel = new BigDecimal(Math.pow(taxaVariavel.floatValue(), tempo.floatValue()));
-            taxaVariavel = taxaVariavel.subtract(new BigDecimal("1.00000000"));
+            taxaVariavel = Investimento.formatarTaxa(taxaVariavel.subtract(new BigDecimal("1.0")));
 
-            this.taxaAdicional = (taxaVariavel.abs(new MathContext(4)));
+            this.taxaAdicional = taxaVariavel;
         }
     }
 
@@ -95,14 +98,13 @@ public class InvestPoupanca extends Investimento implements Serializable {
     public BigDecimal getIndiceRendimento() {
         //Retorna o índice de rendimento que é formado por:
         //Taxa TR e pela taxa adicional que é calulado de acordo com a SELIC
-        setIndiceRendimento(getTaxaAdicional().add(this.taxaTr));
+        setIndiceRendimento(Investimento.formatarTaxa(getTaxaAdicional().add(getTaxaTr())));
         return super.getIndiceRendimento();
     }
 
-    @Override
+    /* @Override
     public BigDecimal getValorAtualizado() {
-        setValorAtualizado(this.getValor().add(this.getRendimentos()));
+        setValorAtualizado(Investimento.formatarNumero(this.getValor().add(this.getRendimentos())));
         return super.getValorAtualizado();
-    }
-
+    }*/
 }
