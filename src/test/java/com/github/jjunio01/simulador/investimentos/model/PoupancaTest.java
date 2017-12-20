@@ -9,6 +9,7 @@ import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -51,7 +52,7 @@ public class PoupancaTest {
         Assert.assertEquals(poupanca.getValorAtualizado(), Investimento.formatarNumero(valorAtualizado));
     }
 
-    //@Test
+    @Test
     public void testTaxaAdicional() {
         BigDecimal taxaSelicTest = Investimento.formatarTaxa(new BigDecimal("7.0"));
         BigDecimal taxaAdicional;
@@ -60,7 +61,7 @@ public class PoupancaTest {
         //Capitalizando ao mês;
         taxaAdicional = Investimento.formatarTaxa(taxaAdicional.add(new BigDecimal("1")));
         BigDecimal tempo = (new BigDecimal("1.0000000").divide(
-                new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).abs(new MathContext(4));
+                new BigDecimal("12.0000000"), BigDecimal.ROUND_UP)).setScale(4, RoundingMode.CEILING);;
 
         taxaAdicional = Investimento.formatarTaxa(new BigDecimal(Math.pow(taxaAdicional.floatValue(), tempo.floatValue())));
         taxaAdicional = Investimento.formatarTaxa(taxaAdicional.subtract(new BigDecimal("1")));
@@ -93,5 +94,17 @@ public class PoupancaTest {
         BigDecimal valorNegativo = new BigDecimal("-1000");
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setValor(valorNegativo);
+    }
+
+    @Test
+    public void testPeriodoNegativo() {
+
+        excecao.expect(IllegalArgumentException.class);
+        excecao.expectMessage("Período Negativo");
+
+        int periodoNegativo = -1;
+        InvestPoupanca poupanca = new InvestPoupanca();
+        poupanca.setPeriodo(periodoNegativo);
+
     }
 }
