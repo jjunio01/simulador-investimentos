@@ -64,7 +64,11 @@ public class Investimento implements Serializable {
     }
 
     public void setPeriodo(int periodo) {
-        this.periodo = periodo;
+        if (periodo >= 0) {
+            this.periodo = periodo;
+        } else {
+            throw new IllegalArgumentException("Período Negativo");
+        }
     }
 
     public BigDecimal getRendimentos() {
