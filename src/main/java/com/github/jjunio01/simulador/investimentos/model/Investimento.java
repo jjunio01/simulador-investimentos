@@ -51,7 +51,11 @@ public class Investimento implements Serializable {
     }
 
     public void setValor(BigDecimal valor) {
-        this.valor = valor;
+        if (valor.signum() != -1) {
+            this.valor = valor;
+        } else {
+            throw new IllegalArgumentException("Valor Negativo");
+        }
     }
 
     public int getPeriodo() {
