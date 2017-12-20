@@ -9,14 +9,17 @@ import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  *
  * @author Jose Junio
  */
 public class PoupancaTest {
+
+    @Rule
+    public ExpectedException excecao = ExpectedException.none();
 
     @Test
     public void testCalcularRendimentosPoupanca() {
@@ -84,10 +87,11 @@ public class PoupancaTest {
     @Test
     public void testPoupancaValorNegativo() {
 
+        excecao.expect(IllegalArgumentException.class);
+        excecao.expectMessage("Valor Negativo");
+
         BigDecimal valorNegativo = new BigDecimal("-1000");
         InvestPoupanca poupanca = new InvestPoupanca();
         poupanca.setValor(valorNegativo);
-        poupanca.calcularRendimentos();
-        Assert.assertEquals(poupanca.getValorAtualizado(), Investimento.formatarNumero(valorNegativo));
     }
 }
