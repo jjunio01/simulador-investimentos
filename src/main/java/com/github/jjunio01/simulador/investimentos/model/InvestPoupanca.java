@@ -18,7 +18,7 @@ import javax.persistence.Entity;
 public class InvestPoupanca extends Investimento implements Serializable {
 
     private BigDecimal taxaTr = new BigDecimal("0.0");
-    private BigDecimal taxaSelic = new BigDecimal("7.5");
+    private BigDecimal taxaSelic = new BigDecimal("7.0");
     private BigDecimal taxaAdicional;
 
     public InvestPoupanca() {
