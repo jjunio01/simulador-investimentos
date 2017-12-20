@@ -30,8 +30,10 @@ public class InvestPoupanca extends Investimento implements Serializable {
     @Override
     public void calcularRendimentos() {
         //Calcula os juros mensais do valor, utilizando juros compostos.
-        this.setRendimentos(this.getValor().multiply(
-                getIndiceRendimento()).pow(super.getPeriodo()));
+        if (this.getValor().signum() != -1) {
+            this.setRendimentos(this.getValor().multiply(
+                    getIndiceRendimento()).pow(super.getPeriodo()));
+        }
 
     }
 
