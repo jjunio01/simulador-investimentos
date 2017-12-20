@@ -29,7 +29,7 @@ public class PoupancaTest {
         BigDecimal valorAtualizado;
         BigDecimal taxaTR = Investimento.formatarTaxa(new BigDecimal("0.0"));
         BigDecimal indiceRendimento;
-        BigDecimal taxaSelic = Investimento.formatarNumero(new BigDecimal("7.5"));
+        BigDecimal taxaSelic = Investimento.formatarNumero(new BigDecimal("7.0"));
         BigDecimal taxaVariavel;
         //taxaVariável - Se taxaSelic > 8.5% a.a = 0.5% a.m.
         //tavaVariável - Se taxaSelic <= 8.5% a.a. = taxaSelic * 0.7 capitalizado ao mês
@@ -50,7 +50,7 @@ public class PoupancaTest {
 
     //@Test
     public void testTaxaAdicional() {
-        BigDecimal taxaSelicTest = Investimento.formatarTaxa(new BigDecimal("7.5"));
+        BigDecimal taxaSelicTest = Investimento.formatarTaxa(new BigDecimal("7.0"));
         BigDecimal taxaAdicional;
         taxaAdicional = Investimento.formatarTaxa(taxaSelicTest.multiply(new BigDecimal("0.7")));
         taxaAdicional = Investimento.formatarTaxa(taxaAdicional.divide(new BigDecimal("100")));
