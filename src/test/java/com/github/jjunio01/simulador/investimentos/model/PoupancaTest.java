@@ -67,7 +67,6 @@ public class PoupancaTest {
         taxaAdicional = Investimento.formatarTaxa(taxaAdicional.subtract(new BigDecimal("1")));
 
         InvestPoupanca poupanca = new InvestPoupanca();
-        System.out.println(taxaAdicional);
         Assert.assertEquals(poupanca.getTaxaAdicional(), taxaAdicional);
 
     }
