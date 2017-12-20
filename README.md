@@ -32,8 +32,9 @@
 	Parcela I - Remuneração dado pela TR (Taxa Referencial)
 	Parcela II - Remuneração adicional que segue estes critérios:
 		
-		Se Taxa Selic superior a 8.5 %
+		Se Taxa Selic superior a 7.0 %
 			- Parcela II com taxa de 0.5 % a.m.
-		Se Taxa Selic igual ou inferior a 8.5% a.a.
+		Se Taxa Selic igual ou inferior a 7.0% a.a.
 			- Parcela II com taxa de 70 % da Selic capitalizadas ao mês.
 
+   Obs. Taxa Selic consultada em 19/12/2017 no site do BCB
