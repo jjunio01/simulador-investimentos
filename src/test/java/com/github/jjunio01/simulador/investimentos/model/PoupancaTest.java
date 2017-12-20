@@ -76,20 +76,18 @@ public class PoupancaTest {
         poupanca.setPeriodo(1);
         poupanca.setValor(valorZero);
         poupanca.calcularRendimentos();
-        valorZero = valorZero.setScale(2, RoundingMode.CEILING);
-        Assert.assertEquals(poupanca.getValorAtualizado().setScale(2, RoundingMode.CEILING), valorZero);
+        valorZero = Investimento.formatarNumero(valorZero);
+        Assert.assertEquals(poupanca.getValorAtualizado(), valorZero
+        );
     }
 
     @Test
-    public void testFormatarTaxa() {
-
-        BigDecimal taxa = new BigDecimal("8.7");
-        taxa = taxa.setScale(8, RoundingMode.CEILING);
-        Assert.assertEquals(Investimento.formatarTaxa(taxa), taxa);
-    }
-
-    //@Test
     public void testPoupancaValorNegativo() {
 
+        BigDecimal valorNegativo = new BigDecimal("-1000");
+        InvestPoupanca poupanca = new InvestPoupanca();
+        poupanca.setValor(valorNegativo);
+        poupanca.calcularRendimentos();
+        Assert.assertEquals(poupanca.getValorAtualizado(), Investimento.formatarNumero(valorNegativo));
     }
 }
