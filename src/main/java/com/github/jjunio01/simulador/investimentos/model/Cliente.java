@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
     private String email;
     @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Investimento> listaInvestimentos;
 
     public Cliente(String nome, String cpf, Date dataNasc, String email, Usuario usuario) {
@@ -41,12 +41,12 @@ public class Cliente implements Serializable {
         this.dataNasc = dataNasc;
         this.email = email;
         this.usuario = usuario;
+        this.listaInvestimentos = new ArrayList<>();
     }
 
     public Cliente() {
         usuario = new Usuario();
-        List<Investimento> lista = new ArrayList<>();
-        this.setListaInvestimentos(lista);
+        this.listaInvestimentos = new ArrayList<>();
     }
 
     public Integer getId() {
