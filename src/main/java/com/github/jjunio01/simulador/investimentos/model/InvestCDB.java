@@ -17,12 +17,13 @@ import javax.persistence.Entity;
 public class InvestCDB extends Investimento implements Serializable {
 
     private BigDecimal taxaIR;
-    private final BigDecimal cdi = new BigDecimal("10.14");
+    private final BigDecimal cdi = Investimento.formatarTaxa(new BigDecimal("6.89"));
     private BigDecimal percentCDI = new BigDecimal("90");
     private BigDecimal rendimentoLiquido;
     private BigDecimal iof;
 
     public InvestCDB() {
+        super.setRendimentos(Investimento.formatarNumero(new BigDecimal("0")));
     }
 
     @Override

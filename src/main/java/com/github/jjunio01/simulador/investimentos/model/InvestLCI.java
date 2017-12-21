@@ -18,10 +18,12 @@ import javax.persistence.Entity;
 @Entity
 public class InvestLCI extends Investimento implements Serializable {
 
-    private final BigDecimal cdi = new BigDecimal("10.14");
+    private final BigDecimal cdi = Investimento.formatarTaxa(new BigDecimal("6.89"));
     private BigDecimal percentCDI = new BigDecimal("80");
 
     public InvestLCI() {
+        this.percentCDI = Investimento.formatarTaxa(this.percentCDI);
+        super.setRendimentos(Investimento.formatarNumero(new BigDecimal("0")));
     }
 
     @Override
@@ -58,4 +60,16 @@ public class InvestLCI extends Investimento implements Serializable {
         this.percentCDI = percentCDI;
     }
 
+    /*
+    ValorNomialAtualizado = ValorNominalEmissao x C
+     */
+ /*
+    C = produtorio . (TR/100 + 1) ^ periodo
+     */
+ /*
+    J = VNA x (FatJuros -1)
+     */
+ /*
+    FatJuros = [ (i/100 + 1) ^ prazo/360
+     */
 }
