@@ -72,6 +72,16 @@ public class PoupancaTest {
     }
 
     @Test
+    public void testTaxaAdicionalSelicMaiorQueOitoEMeio() {
+
+        BigDecimal taxaSelicTest = Investimento.formatarTaxa(new BigDecimal("9"));
+        InvestPoupanca poupanca = new InvestPoupanca();
+        poupanca.setTaxaSelic(taxaSelicTest);
+        Assert.assertEquals(poupanca.getTaxaAdicional(), Investimento.formatarTaxa(new BigDecimal("0.0053")));
+
+    }
+
+    @Test
     public void testPoupancaValoZero() {
 
         BigDecimal valorZero = new BigDecimal("0.00000000");
