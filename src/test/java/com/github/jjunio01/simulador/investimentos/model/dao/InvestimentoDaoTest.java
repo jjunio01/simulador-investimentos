@@ -128,6 +128,59 @@ public class InvestimentoDaoTest {
         ClienteDao.getInstance().delete("0123");
     }
 
+    @Test
+    public void testSalvarCdbValorZero() throws ErroSistema {
+
+        Cliente clienteTest = new Cliente("Teste", "0123", new Date(), "teste@email.com", new Usuario("novo", "senha"));
+        InvestCDB cdb = new InvestCDB();
+        cdb.setValor(new BigDecimal("0"));
+        cdb.setPeriodo(1);
+        List<Investimento> listaInvestimentos = new ArrayList<>();
+        listaInvestimentos.add(cdb);
+        clienteTest.setListaInvestimentos(listaInvestimentos);
+        ClienteDao.getInstance().create(clienteTest);
+        Cliente clienteBD = ClienteDao.getInstance().read("0123");
+        Assert.assertEquals(clienteBD.getListaInvestimentos().get(0).getValor(),
+                Investimento.formatarNumero(new BigDecimal("0")));
+        ClienteDao.getInstance().delete("0123");
+
+    }
+
+    @Test
+    public void testSalvarCdbValorNegativo() throws ErroSistema {
+
+        excecao.expect(IllegalArgumentException.class);
+        excecao.expectMessage("Valor Negativo");
+
+        Cliente clienteTest = new Cliente("Teste", "0123", new Date(), "teste@email.com", new Usuario("novo", "senha"));
+        InvestCDB cdb = new InvestCDB();
+        cdb.setValor(new BigDecimal("-1000"));
+        cdb.setPeriodo(1);
+        List<Investimento> listaInvestimentos = new ArrayList<>();
+        listaInvestimentos.add(cdb);
+        clienteTest.setListaInvestimentos(listaInvestimentos);
+        ClienteDao.getInstance().create(clienteTest);
+        Cliente clienteBD = ClienteDao.getInstance().read("0123");
+
+    }
+
+    @Test
+    public void testRendimentosCdbValorZero() throws ErroSistema {
+
+        Cliente clienteTest = new Cliente("Teste", "0123", new Date(), "teste@email.com", new Usuario("novo", "senha"));
+        InvestCDB cdb = new InvestCDB();
+        cdb.setValor(new BigDecimal("0"));
+        cdb.setPeriodo(1);
+        List<Investimento> listaInvestimentos = new ArrayList<>();
+        listaInvestimentos.add(cdb);
+        clienteTest.setListaInvestimentos(listaInvestimentos);
+        ClienteDao.getInstance().create(clienteTest);
+        Cliente clienteBD = ClienteDao.getInstance().read("0123");
+        Assert.assertEquals(clienteBD.getListaInvestimentos().get(0).getRendimentos(),
+                Investimento.formatarNumero(new BigDecimal("0")));
+        ClienteDao.getInstance().delete("0123");
+    }
+
     /**
      * Test of salvarLCI method, of class InvestimentoDao.
      *
@@ -140,6 +193,58 @@ public class InvestimentoDaoTest {
         InvestLCI lci = new InvestLCI();
         lci.setValor(new BigDecimal("0"));
         lci.setPeriodo(90);
+        List<Investimento> listaInvestimentos = new ArrayList<>();
+        listaInvestimentos.add(lci);
+        clienteTest.setListaInvestimentos(listaInvestimentos);
+        ClienteDao.getInstance().create(clienteTest);
+        Cliente clienteBD = ClienteDao.getInstance().read("0123");
+        Assert.assertEquals(clienteBD.getListaInvestimentos().get(0).getRendimentos(),
+                Investimento.formatarNumero(new BigDecimal("0")));
+        ClienteDao.getInstance().delete("0123");
+    }
+
+    @Test
+    public void testSalvarLciComValorZero() throws ErroSistema {
+
+        Cliente clienteTest = new Cliente("Teste", "0123", new Date(), "teste@email.com", new Usuario("novo", "senha"));
+        InvestLCI lci = new InvestLCI();
+        lci.setValor(new BigDecimal("0"));
+        lci.setPeriodo(1);
+        List<Investimento> listaInvestimentos = new ArrayList<>();
+        listaInvestimentos.add(lci);
+        clienteTest.setListaInvestimentos(listaInvestimentos);
+        ClienteDao.getInstance().create(clienteTest);
+        Cliente clienteBD = ClienteDao.getInstance().read("0123");
+        Assert.assertEquals(clienteBD.getListaInvestimentos().get(0).getValor(),
+                Investimento.formatarNumero(new BigDecimal("0")));
+        ClienteDao.getInstance().delete("0123");
+    }
+
+    @Test
+    public void testSalvarLciValorNegativo() throws ErroSistema {
+
+        excecao.expect(IllegalArgumentException.class);
+        excecao.expectMessage("Valor Negativo");
+
+        Cliente clienteTest = new Cliente("Teste", "0123", new Date(), "teste@email.com", new Usuario("novo", "senha"));
+        InvestLCI lci = new InvestLCI();
+        lci.setValor(new BigDecimal("-1000"));
+        lci.setPeriodo(1);
+        List<Investimento> listaInvestimentos = new ArrayList<>();
+        listaInvestimentos.add(lci);
+        clienteTest.setListaInvestimentos(listaInvestimentos);
+        ClienteDao.getInstance().create(clienteTest);
+        Cliente clienteBD = ClienteDao.getInstance().read("0123");
+
+    }
+
+    @Test
+    public void testRendimentosLciValorZero() throws ErroSistema {
+
+        Cliente clienteTest = new Cliente("Teste", "0123", new Date(), "teste@email.com", new Usuario("novo", "senha"));
+        InvestLCI lci = new InvestLCI();
+        lci.setValor(new BigDecimal("0"));
+        lci.setPeriodo(1);
         List<Investimento> listaInvestimentos = new ArrayList<>();
         listaInvestimentos.add(lci);
         clienteTest.setListaInvestimentos(listaInvestimentos);
